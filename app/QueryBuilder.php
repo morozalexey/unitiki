@@ -25,6 +25,7 @@ class queryBuilder
 		->leftJoin("categories", "posts.category_id = categories.id")
 		->where("posts.hide = 1")        
 		->orderBy(["id DESC"]);
+        //->limit(10)
 
 		$sth = $this->pdo->prepare($select->getStatement());
 		$sth->execute($select->getBindValues());
@@ -32,6 +33,34 @@ class queryBuilder
 
 		return $result;
 	}
+
+    public function getPostsByCategory($table, $category_id)
+    {
+
+        $select = $this->queryFactory->newSelect();
+        //posts.*", "categories.category_name"
+        //, "categories"
+        $select->cols(["*"])
+        ->from("posts")
+        ->leftJoin("categories", "posts.category_id = categories.id")
+        ->where('category_id = :category_id')
+        ->bindValue('category_id', $category_id);
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getOne($table, $id) 
+    {
+        $select = $this->queryFactory->newSelect();
+        $select->cols(["*"])
+            ->from($table)
+            ->where('id = :id')
+            ->bindValue('id',$id);
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
 
 	public function getAll($table)
 	{
@@ -47,34 +76,7 @@ class queryBuilder
 		$result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;
-	}
-
-	public function getPostsByCategory($table, $category_id)
-    {
-
-        $select = $this->queryFactory->newSelect();
-
-        $select->cols(["posts.*", "categories.category_name"])
-        ->from("posts")
-        ->leftJoin("categories", "posts.category_id = categories.id")
-        ->where("category_id = :category_id")
-        ->bindValue('category_id', $category_id);
-        $sth = $this->pdo->prepare($select->getStatement());
-        $sth->execute($select->getBindValues());
-        return $sth->fetch(PDO::FETCH_ASSOC);
-    }
-
-	public function getOne($table, $id) 
-    {
-        $select = $this->queryFactory->newSelect();
-        $select->cols(["*"])
-            ->from($table)
-            ->where('id = :id')
-            ->bindValue('id',$id);
-        $sth = $this->pdo->prepare($select->getStatement());
-        $sth->execute($select->getBindValues());
-        return $sth->fetch(PDO::FETCH_ASSOC);
-    }
+	}	
 
     public function insert($table, $data) 
     {

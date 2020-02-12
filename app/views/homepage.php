@@ -5,7 +5,7 @@
 	 <div class="card">
 	    <div class="card-header"><h3>Статьи</h3></div>
         <?php foreach($posts as $post):?>	
-	    <div class="card-body">	      
+	    <div class="card-body" id="articles">	      
 									  
 	        <div class="media">	        			
 	          <div class="media-body">
@@ -20,5 +20,4 @@
         <?php endforeach; ?>
 	</div>                   
 </div>
-                
-<?php d($posts) ?>
+               

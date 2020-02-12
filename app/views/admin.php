@@ -62,7 +62,7 @@
                             <a href="/hide?id=<?= $post['id'] ?>" class="btn btn-warning">Запретить</a>
 							<?php endif ; ?>
                             <a href="/delete?id=<?= $post['id'] ?>" onclick="return confirm('are you sure?')" class="btn btn-danger">Удалить</a>
-                            <a href="/post_page?id=<?= $post['id'] ?>" class="btn btn-warning">Редактировать</a>
+                            <a href="/post_page?id=<?= $post['id'] ?>" class="btn btn-info">Редактировать</a>
                         </td>											
                     </tr>
 				<?php endforeach; ?>									

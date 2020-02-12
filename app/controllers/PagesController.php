@@ -34,16 +34,18 @@ class PagesController {
     public function category(){  
 
         $category_id = $_GET['category_id'];
-
-        //$posts = $this->db->getPostsByCategory('posts', $category_id);
-
-        $sql = "SELECT posts.dt_add, posts.title, posts.text, posts.category_id, categories.category_name FROM posts, categories WHERE category_id = :category_id AND hide = 1 ORDER BY posts.dt_add DESC";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':category_id', $category_id);
-        $stmt->execute();
-        $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);       
         
-        echo $this->templates->render('homepage', ['posts' => $posts]);       
+        $postsByCategory = $this->db->getPostsByCategory('posts', $category_id);
+        
+        /*
+        $sql = "SELECT * FROM posts, categories WHERE category_id = {$category_id} AND hide = 1 ORDER BY posts.dt_add DESC";
+        $stmt = $pdo->prepare($sql);
+        //$stmt->bindValue(':category_id', $category_id);
+        $stmt->execute();
+        $postsByCategory = $stmt->fetchAll(PDO::FETCH_ASSOC);  
+        */
+        
+        echo $this->templates->render('category', ['postsByCategory' => $postsByCategory]);       
     }
     
     public function post_page(){

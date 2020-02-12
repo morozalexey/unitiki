@@ -42,9 +42,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
     $r->addRoute('GET', '/delete', ['App\controllers\MainController', 'delete']);
     $r->addRoute('POST', '/new_post', ['App\controllers\MainController', 'new_post']);
     $r->addRoute('POST', '/change_post', ['App\controllers\MainController', 'change_post']);
-    $r->addRoute('GET', '/category', ['App\controllers\PagesController', 'category']);
-    //$r->addRoute('POST', '/edit_profile', ['App\controllers\MainController', 'edit_profile']);
-    
+    $r->addRoute('GET', '/category', ['App\controllers\PagesController', 'category']);    
 });
 
 // Fetch method and URI from somewhere
